@@ -1,6 +1,15 @@
 controllers:
     resource: ../src/Controller/
     type: annotation
+    prefix: /
+
+#redirect homme page
+homepage:
+    path: /
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+    defaults:
+        path: /accueil
+        permanent: true
 
 kernel:
     resource: ../src/Kernel.php

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Promotion index{% endblock %}
+
+{% block body %}
+    <h1>Promotion index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Formation</th>
+                <th>Formateur</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for promotion in promotions %}
+            <tr>
+                <td>{{ promotion.id }}</td>
+                <td>{{ promotion.nom }}</td>
+                {% if promotion.formation.intitule is defined  %}
+                    <td><a href={{ url('app_formation_show', { id: promotion.formation.id }) }}>{{ promotion.formation.intitule}}</a></td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                {% if promotion.formateur.nom is defined   %}
+                    <td><a href={{ url('app_formateur_show', { id: promotion.formateur.id }) }}>{{ promotion.formateur.nom }}</a></td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                <td>
+                    <a href="{{ path('app_promotion_show', {'id': promotion.id}) }}">Details</a>
+                    <a href="{{ path('app_promotion_edit', {'id': promotion.id}) }}">modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucun résultat found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_promotion_new') }}">Créer nouveau</a>
+{% endblock %}

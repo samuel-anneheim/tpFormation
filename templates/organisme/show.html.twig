@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Organisme{% endblock %}
+
+{% block body %}
+    <h1>Organisme</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ organisme.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ organisme.nom }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ organisme.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Numero_tel</th>
+                <td>{{ organisme.numeroTel }}</td>
+            </tr>
+            <tr>
+                <th>Email_contact</th>
+                <td>{{ organisme.emailContact }}</td>
+            </tr>
+            {% if organisme.formations | length > 0  %}
+            <tr>
+                <th>Formation de l'organisme {{ organisme.nom }}</th>
+                {% for formation in organisme.formations %}
+                    <td><a href={{ url('app_formation_show', { id: formation.id }) }}>{{ formation.intitule }}</a></td>                    
+                {% endfor %}
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_organisme_index') }}">Retour à la liste</a>
+
+    <a href="{{ path('app_organisme_edit', {'id': organisme.id}) }}">modifier</a>
+
+    {{ include('organisme/_delete_form.html.twig') }}
+{% endblock %}

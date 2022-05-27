@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formation index{% endblock %}
+
+{% block body %}
+    <h1>Formation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Intitule</th>
+                <th>Organisme</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for formation in formations %}
+            <tr>
+                <td>{{ formation.id }}</td>
+                <td>{{ formation.intitule }}</td>
+                {% if formation.organisme.nom is defined %}
+                    <td><a href={{ url('app_organisme_show', { id: formation.organisme.id }) }}>{{ formation.organisme.nom }}</a></td>  
+                {% else %}
+                    <td></td>
+                {% endif %} 
+                <td>
+                    <a href="{{ path('app_formation_show', {'id': formation.id}) }}">Details</a>
+                    <a href="{{ path('app_formation_edit', {'id': formation.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucun résultat found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_formation_new') }}">Créer nouveau</a>
+{% endblock %}
